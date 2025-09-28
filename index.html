@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Resize Photo - Free photo Resize, Free photo corner and background change tools.">
+    <meta name="keywords" content="Resize Photo - Free photo Resize, Free photo corner and background change tools.">
+    <title>Resize Photo by Asif Akmam- Free Photo editing Tool</title>
+    <style>
+        :root {
+            --primary: #E1306C;
+            --secondary: #833AB4;
+            --accent: #405DE6;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --gradient: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background: var(--gradient);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-icon {
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+
+        nav ul li a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .mobile-menu {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="white"/><path d="M0,0 L100,100 M100,0 L0,100" stroke="%23f0f0f0" stroke-width="1"/></svg>');
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            color: #666;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .upload-section, .preview-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title i {
+            margin-right: 10px;
+        }
+
+        /* Upload Area */
+        .upload-area {
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+            padding: 3rem 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+        }
+
+        .upload-area:hover {
+            border-color: var(--primary);
+            background-color: rgba(225, 48, 108, 0.05);
+        }
+
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .upload-text {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .upload-btn {
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(225, 48, 108, 0.3);
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(225, 48, 108, 0.4);
+        }
+
+        /* Controls */
+        .controls {
+            margin-top: 1.5rem;
+        }
+
+        .control-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .control-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .slider {
+            flex: 1;
+            height: 6px;
+            -webkit-appearance: none;
+            background: #ddd;
+            border-radius: 3px;
+            outline: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .slider-value {
+            margin-left: 10px;
+            min-width: 40px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .color-picker {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .color-option {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .color-option:hover {
+            transform: scale(1.1);
+        }
+
+        .color-option.active {
+            border-color: var(--dark);
+            transform: scale(1.1);
+        }
+
+        /* Crop Controls */
+        .crop-controls {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f9f9f9;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .crop-controls.active {
+            display: block;
+        }
+
+        .crop-aspect-ratios {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .aspect-ratio-btn {
+            padding: 8px 15px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .aspect-ratio-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Preview Section */
+        .preview-container {
+            width: 100%;
+            height: 300px;
+            border: 1px solid #eee;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            background-color: #f9f9f9;
+            position: relative;
+        }
+
+        #previewImage {
+            max-width: 100%;
+            max-height: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn {
+            background: var(--gradient);
+            color: white;
+            box-shadow: 0 4px 10px rgba(225, 48, 108, 0.3);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(225, 48, 108, 0.4);
+        }
+
+        .reset-btn {
+            background: #6c757d;
+            color: white;
+        }
+
+        .reset-btn:hover {
+            background: #5a6268;
+        }
+
+        .action-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Ad Placeholders */
+        .ad-container {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .native-ad {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1rem;
+        }
+
+        .ad-label {
+            font-size: 0.8rem;
+            color: #888;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .social-bar {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 1.5rem 0;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-3px);
+        }
+
+        .facebook { background: #3b5998; }
+        .twitter { background: #1da1f2; }
+        .instagram { background: var(--gradient); }
+        .pinterest { background: #bd081c; }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 0 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .footer-section h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--gradient);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                padding: 1rem 0;
+                border-radius: 0 0 10px 10px;
+            }
+
+            nav ul.show {
+                display: flex;
+            }
+
+            nav ul li {
+                margin: 0;
+            }
+
+            nav ul li a {
+                display: block;
+                padding: 10px 20px;
+                color: var(--dark);
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* Cropping overlay */
+        .crop-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .crop-modal {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 90%;
+            max-height: 90%;
+            overflow: auto;
+        }
+
+        .crop-canvas-container {
+            position: relative;
+            margin: 1rem 0;
+        }
+
+        #cropCanvas {
+            max-width: 100%;
+            border: 1px solid #ddd;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 1rem;
+        }
+
+        .modal-btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .confirm-crop {
+            background: var(--primary);
+            color: white;
+        }
+
+        .cancel-crop {
+            background: #6c757d;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <span class="logo-icon">📷</span>
+                Resize Photo
+            </div>
+            <nav>
+                <div class="mobile-menu">☰</div>
+                <ul>
+                    <li><a href="#home">HOME🏠</a></li>
+                    <li><a href="#features">Features 📲</a></li>
+                    <li><a href="#how-to-use">User Manual💬</a></li>
+                    <li><a href="#contact">Contact Us🗣️</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Edit photo here easily</h1>
+            <p>Resize Photo - Free photo Resize, Free photo corner and background change tools!</p>
+        </div>
+    </section>
+
+<!-- Native Ad Banner -->
+    <div class="container ad-container">
+        <div class="native-ad">
+            <div class="ad-label">Advertisement</div>
+            <!-- Adstarra Native Banner Ad -->
+            <div id="adstarra-native-banner">
+                <script type="text/javascript">
+                    atOptions = {
+                        'key' : '31e64baa2b5275ee051092cd801fbfaa',
+                        'format' : 'iframe',
+                        'height' : 50,
+                        'width' : 320,
+                        'params' : {}
+                    };
+                </script>
+                <script type="text/javascript" src="//www.highperformanceformat.com/31e64baa2b5275ee051092cd801fbfaa/invoke.js"></script>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container main-content">
+        <!-- Upload Section -->
+        <section class="upload-section">
+            <h2 class="section-title">
+                <span>Upload here your picture</span>
+            </h2>
+            
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">📁</div>
+                <p class="upload-text">Upload the image by clicking or dragging it here.</p>
+                <button class="upload-btn">Upload Your Photo</button>
+                <input type="file" id="fileInput" accept="image/*" style="display: none;">
+            </div>
+            
+            <div class="controls">
+                <div class="control-group">
+                    <label class="control-label">Corner Round</label>
+                    <div class="slider-container">
+                        <input type="range" min="0" max="100" value="0" class="slider" id="cornerRadius">
+                        <span class="slider-value" id="cornerValue">0px</span>
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                    <label class="control-label">Background Colour</label>
+                    <div class="color-picker">
+                        <div class="color-option active" style="background-color: transparent;" data-color="transparent"></div>
+                        <div class="color-option" style="background-color: #ffffff;" data-color="#ffffff"></div>
+                        <div class="color-option" style="background-color: #000000;" data-color="#000000"></div>
+                        <div class="color-option" style="background-color: #E1306C;" data-color="#E1306C"></div>
+                        <div class="color-option" style="background-color: #833AB4;" data-color="#833AB4"></div>
+                        <div class="color-option" style="background-color: #405DE6;" data-color="#405DE6"></div>
+                        <div class="color-option" style="background-color: #fd1d1d;" data-color="#fd1d1d"></div>
+                        <div class="color-option" style="background-color: #f77737;" data-color="#f77737"></div>
+                    </div>
+                </div>
+
+                <!-- Additional Editing Controls -->
+                <div class="control-group">
+                    <label class="control-label">Brightness</label>
+                    <div class="slider-container">
+                        <input type="range" min="0" max="200" value="100" class="slider" id="brightness">
+                        <span class="slider-value" id="brightnessValue">100%</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Contrast</label>
+                    <div class="slider-container">
+                        <input type="range" min="0" max="200" value="100" class="slider" id="contrast">
+                        <span class="slider-value" id="contrastValue">100%</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Saturation</label>
+                    <div class="slider-container">
+                        <input type="range" min="0" max="200" value="100" class="slider" id="saturation">
+                        <span class="slider-value" id="saturationValue">100%</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Blur</label>
+                    <div class="slider-container">
+                        <input type="range" min="0" max="10" value="0" class="slider" id="blur">
+                        <span class="slider-value" id="blurValue">0px</span>
+                    </div>
+                </div>
+
+                <!-- Crop Controls -->
+                <div class="control-group">
+                    <button class="upload-btn" id="cropBtn" style="width: 100%;">Crop Image</button>
+                    <div class="crop-controls" id="cropControls">
+                        <div class="crop-aspect-ratios">
+                            <button class="aspect-ratio-btn active" data-ratio="free">Free</button>
+                            <button class="aspect-ratio-btn" data-ratio="1:1">1:1</button>
+                            <button class="aspect-ratio-btn" data-ratio="4:3">4:3</button>
+                            <button class="aspect-ratio-btn" data-ratio="16:9">16:9</button>
+                            <button class="aspect-ratio-btn" data-ratio="3:2">3:2</button>
+                        </div>
+                        <div class="crop-canvas-container">
+                            <canvas id="cropCanvas"></canvas>
+                        </div>
+                        <div class="modal-buttons">
+                            <button class="modal-btn cancel-crop" id="cancelCrop">Cancel</button>
+                            <button class="modal-btn confirm-crop" id="confirmCrop">Apply Crop</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Preview Section -->
+        <section class="preview-section">
+            <h2 class="section-title">
+                <span>Preview</span>
+            </h2>
+            
+            <div class="preview-container">
+                <img id="previewImage" src="" alt="PreviewImage" style="display: none;">
+                <p id="previewText">See🙂 Your Image</p>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="action-btn download-btn" id="downloadBtn" disabled>Download Image</button>
+                <button class="action-btn reset-btn" id="resetBtn">Reset</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Crop Overlay -->
+    <div class="crop-overlay" id="cropOverlay">
+        <div class="crop-modal">
+            <h3>Crop Image</h3>
+            <div class="crop-canvas-container">
+                <canvas id="cropCanvas"></canvas>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel-crop" id="cancelCrop">Cancel</button>
+                <button class="modal-btn confirm-crop" id="confirmCrop">Apply Crop</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Social Bar Ad -->
+    <div class="container ad-container">
+        <div class="social-bar">
+            <!-- Adstarra Social Bar Ad -->
+            <div id="adstarra-social-bar">
+                <script type='text/javascript' src='//pl27743176.revenuecpmgate.com/d6/e0/ea/d6e0ea4eecc3dd7f700591fee8b79edf.js'></script>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Resize Photo</h3>
+                    <p>One of Easy photo editing tools Which will change the corner side along with the size and background changes of your photo. </p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>LINK</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#features">Features </a></li>
+                        <li><a href="#how-to-use">User Manual</a></li>
+                        <li><a href="#privacy">Privacy policy </a></li>
+                        <li><a href="#terms">Terms and conditions</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact with us </h3>
+                    <ul class="footer-links">
+                        <li><a href="mailto:support@resizephoto.com">Email: asifakmam@gmail.com</a></li>
+                        <li><a href="#">Facebook </a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">Instagram</a></li>
+                        <li><a href="https://wa.me/message/UHWFYR5O6KHZI1">WhatsApp for emergency It works.</a></li>
+                        <li><a href="#">Github</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2025 Resize Photo. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const previewImage = document.getElementById('previewImage');
+        const previewText = document.getElementById('previewText');
+        const cornerRadius = document.getElementById('cornerRadius');
+        const cornerValue = document.getElementById('cornerValue');
+        const colorOptions = document.querySelectorAll('.color-option');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const navMenu = document.querySelector('nav ul');
+        
+        // New editing controls
+        const brightness = document.getElementById('brightness');
+        const brightnessValue = document.getElementById('brightnessValue');
+        const contrast = document.getElementById('contrast');
+        const contrastValue = document.getElementById('contrastValue');
+        const saturation = document.getElementById('saturation');
+        const saturationValue = document.getElementById('saturationValue');
+        const blur = document.getElementById('blur');
+        const blurValue = document.getElementById('blurValue');
+        
+        // Crop elements
+        const cropBtn = document.getElementById('cropBtn');
+        const cropOverlay = document.getElementById('cropOverlay');
+        const cropCanvas = document.getElementById('cropCanvas');
+        const cancelCrop = document.getElementById('cancelCrop');
+        const confirmCrop = document.getElementById('confirmCrop');
+        const aspectRatioBtns = document.querySelectorAll('.aspect-ratio-btn');
+
+        // Variables
+        let currentImage = null;
+        let originalImage = null;
+        let currentBgColor = 'transparent';
+        let currentCornerRadius = 0;
+        let currentBrightness = 100;
+        let currentContrast = 100;
+        let currentSaturation = 100;
+        let currentBlur = 0;
+        let isCropping = false;
+        let cropStartX, cropStartY, cropEndX, cropEndY;
+        let isDrawing = false;
+        let selectedAspectRatio = 'free';
+
+        // Event Listeners
+        uploadArea.addEventListener('click', () => fileInput.click());
+        fileInput.addEventListener('change', handleImageUpload);
+        cornerRadius.addEventListener('input', updateCornerRadius);
+        downloadBtn.addEventListener('click', downloadImage);
+        resetBtn.addEventListener('click', resetImage);
+        mobileMenu.addEventListener('click', toggleMobileMenu);
+
+        // New editing event listeners
+        brightness.addEventListener('input', updateBrightness);
+        contrast.addEventListener('input', updateContrast);
+        saturation.addEventListener('input', updateSaturation);
+        blur.addEventListener('input', updateBlur);
+
+        // Crop event listeners
+        cropBtn.addEventListener('click', startCropping);
+        cancelCrop.addEventListener('click', cancelCropping);
+        confirmCrop.addEventListener('click', applyCropping);
+        
+        // Aspect ratio buttons
+        aspectRatioBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                aspectRatioBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedAspectRatio = btn.getAttribute('data-ratio');
+            });
+        });
+
+        // Color picker event listeners
+        colorOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                colorOptions.forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+                currentBgColor = option.getAttribute('data-color');
+                updatePreview();
+            });
+        });
+
+        // Functions
+        function handleImageUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            if (!file.type.match('image.*')) {
+                alert('Please select a valid image file.');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                previewImage.src = event.target.result;
+                previewImage.style.display = 'block';
+                previewText.style.display = 'none';
+                currentImage = previewImage;
+                originalImage = new Image();
+                originalImage.src = event.target.result;
+                downloadBtn.disabled = false;
+                updatePreview();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function updateCornerRadius() {
+            currentCornerRadius = cornerRadius.value;
+            cornerValue.textContent = `${currentCornerRadius}px`;
+            updatePreview();
+        }
+
+        function updateBrightness() {
+            currentBrightness = brightness.value;
+            brightnessValue.textContent = `${currentBrightness}%`;
+            updatePreview();
+        }
+
+        function updateContrast() {
+            currentContrast = contrast.value;
+            contrastValue.textContent = `${currentContrast}%`;
+            updatePreview();
+        }
+
+        function updateSaturation() {
+            currentSaturation = saturation.value;
+            saturationValue.textContent = `${currentSaturation}%`;
+            updatePreview();
+        }
+
+        function updateBlur() {
+            currentBlur = blur.value;
+            blurValue.textContent = `${currentBlur}px`;
+            updatePreview();
+        }
+
+        function updatePreview() {
+            if (!currentImage) return;
+
+            // Apply corner radius
+            previewImage.style.borderRadius = `${currentCornerRadius}px`;
+            
+            // Apply background color
+            document.querySelector('.preview-container').style.backgroundColor = currentBgColor;
+            
+            // Apply filters
+            previewImage.style.filter = `
+                brightness(${currentBrightness}%) 
+                contrast(${currentContrast}%) 
+                saturate(${currentSaturation}%) 
+                blur(${currentBlur}px)
+            `;
+        }
+
+        function resetImage() {
+            if (!originalImage) return;
+            
+            currentImage.src = originalImage.src;
+            cornerRadius.value = 0;
+            currentCornerRadius = 0;
+            cornerValue.textContent = '0px';
+            
+            brightness.value = 100;
+            currentBrightness = 100;
+            brightnessValue.textContent = '100%';
+            
+            contrast.value = 100;
+            currentContrast = 100;
+            contrastValue.textContent = '100%';
+            
+            saturation.value = 100;
+            currentSaturation = 100;
+            saturationValue.textContent = '100%';
+            
+            blur.value = 0;
+            currentBlur = 0;
+            blurValue.textContent = '0px';
+            
+            colorOptions.forEach(opt => opt.classList.remove('active'));
+            colorOptions[0].classList.add('active');
+            currentBgColor = 'transparent';
+            
+            updatePreview();
+        }
+
+        function startCropping() {
+            if (!currentImage) {
+                alert('Please upload an image first.');
+                return;
+            }
+            
+            isCropping = true;
+            cropOverlay.style.display = 'flex';
+            
+            // Set up crop canvas
+            const ctx = cropCanvas.getContext('2d');
+            cropCanvas.width = currentImage.naturalWidth;
+            cropCanvas.height = currentImage.naturalHeight;
+            
+            // Draw image on canvas
+            ctx.drawImage(currentImage, 0, 0);
+            
+            // Add event listeners for cropping
+            cropCanvas.addEventListener('mousedown', startCropDraw);
+            cropCanvas.addEventListener('mousemove', drawCropRect);
+            cropCanvas.addEventListener('mouseup', endCropDraw);
+        }
+
+        function startCropDraw(e) {
+            isDrawing = true;
+            const rect = cropCanvas.getBoundingClientRect();
+            cropStartX = e.clientX - rect.left;
+            cropStartY = e.clientY - rect.top;
+        }
+
+        function drawCropRect(e) {
+            if (!isDrawing) return;
+            
+            const rect = cropCanvas.getBoundingClientRect();
+            cropEndX = e.clientX - rect.left;
+            cropEndY = e.clientY - rect.top;
+            
+            // Redraw image
+            const ctx = cropCanvas.getContext('2d');
+            ctx.drawImage(currentImage, 0, 0);
+            
+            // Draw crop rectangle
+            ctx.strokeStyle = '#E1306C';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+            ctx.strokeRect(cropStartX, cropStartY, cropEndX - cropStartX, cropEndY - cropStartY);
+            
+            // Draw semi-transparent overlay
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+            ctx.fillRect(0, 0, cropCanvas.width, cropCanvas.height);
+            
+            // Clear the crop area
+            ctx.clearRect(cropStartX, cropStartY, cropEndX - cropStartX, cropEndY - cropStartY);
+            ctx.drawImage(
+                currentImage, 
+                cropStartX, cropStartY, cropEndX - cropStartX, cropEndY - cropStartY,
+                cropStartX, cropStartY, cropEndX - cropStartX, cropEndY - cropStartY
+            );
+        }
+
+        function endCropDraw() {
+            isDrawing = false;
+        }
+
+        function cancelCropping() {
+            isCropping = false;
+            cropOverlay.style.display = 'none';
+            isDrawing = false;
+        }
+
+        function applyCropping() {
+            if (!cropStartX || !cropStartY || !cropEndX || !cropEndY) {
+                alert('Please select a crop area.');
+                return;
+            }
+            
+            const width = Math.abs(cropEndX - cropStartX);
+            const height = Math.abs(cropEndY - cropStartY);
+            
+            if (width < 10 || height < 10) {
+                alert('Please select a larger crop area.');
+                return;
+            }
+            
+            // Create a new canvas for the cropped image
+            const tempCanvas = document.createElement('canvas');
+            const tempCtx = tempCanvas.getContext('2d');
+            
+            tempCanvas.width = width;
+            tempCanvas.height = height;
+            
+            // Draw the cropped portion
+            tempCtx.drawImage(
+                currentImage,
+                Math.min(cropStartX, cropEndX), Math.min(cropStartY, cropEndY),
+                width, height,
+                0, 0,
+                width, height
+            );
+            
+            // Update the preview image
+            currentImage.src = tempCanvas.toDataURL('image/png');
+            
+            // Close the crop overlay
+            cancelCropping();
+        }
+
+        function downloadImage() {
+            if (!currentImage) return;
+
+            // Create a canvas to draw the final image
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Set canvas dimensions to match the image
+            canvas.width = currentImage.naturalWidth;
+            canvas.height = currentImage.naturalHeight;
+            
+            // Fill with background color
+            if (currentBgColor !== 'transparent') {
+                ctx.fillStyle = currentBgColor;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+            
+            // Create a path with rounded corners
+            if (currentCornerRadius > 0) {
+                const radius = (currentCornerRadius / 100) * Math.min(canvas.width, canvas.height);
+                ctx.beginPath();
+                ctx.moveTo(radius, 0);
+                ctx.lineTo(canvas.width - radius, 0);
+                ctx.arcTo(canvas.width, 0, canvas.width, radius, radius);
+                ctx.lineTo(canvas.width, canvas.height - radius);
+                ctx.arcTo(canvas.width, canvas.height, canvas.width - radius, canvas.height, radius);
+                ctx.lineTo(radius, canvas.height);
+                ctx.arcTo(0, canvas.height, 0, canvas.height - radius, radius);
+                ctx.lineTo(0, radius);
+                ctx.arcTo(0, 0, radius, 0, radius);
+                ctx.closePath();
+                ctx.clip();
+            }
+            
+            // Apply filters
+            ctx.filter = `
+                brightness(${currentBrightness}%) 
+                contrast(${currentContrast}%) 
+                saturate(${currentSaturation}%) 
+                blur(${currentBlur}px)
+            `;
+            
+            // Draw the image
+            ctx.drawImage(currentImage, 0, 0, canvas.width, canvas.height);
+            
+            // Create download link
+            const link = document.createElement('a');
+            link.download = 'edited-image.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        function toggleMobileMenu() {
+            navMenu.classList.toggle('show');
+        }
+
+        // Initialize
+        updatePreview();
+    </script>
+</body>
+</html>
